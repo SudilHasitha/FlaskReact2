@@ -4,6 +4,7 @@ import Search from "./components/Search";
 import { useState } from "react";
 import ImageCard from "./components/ImageCard";
 import { Container, Row, Col } from "react-bootstrap";
+import Welcome from "./components/Welcome";
 
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
 
@@ -30,7 +31,7 @@ const App = () => {
 
   const handleDeleteImage = (id) => {
     setImages(images.filter((image) => image.id !== id));
-  }
+  };
 
   return (
     <div>
@@ -38,13 +39,17 @@ const App = () => {
       <Search word={word} setWord={setWord} handleSubmit={handleSubmit} />
       {/* {!!images.length && <ImageCard image={images[0]}/>} */}
       <Container>
-        <Row xs={1} md={2} lg={3}>
-          {images.map((image, i) => (
-            <Col key={i}>
-              <ImageCard deleteImage={handleDeleteImage} image={image} />
-            </Col>
-          ))}
-        </Row>
+        {images.length ? (
+          <Row xs={1} md={2} lg={3}>
+            {images.map((image, i) => (
+              <Col key={i}>
+                <ImageCard deleteImage={handleDeleteImage} image={image} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Welcome />
+        )}
       </Container>
     </div>
   );
